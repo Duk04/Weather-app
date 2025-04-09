@@ -1,5 +1,5 @@
 "use client";
-import { Mainbody } from "./components/Mainbody";
+import { Mainbody } from "../components/Mainbody";
 import React from "react";
 
 const Home = () => {
