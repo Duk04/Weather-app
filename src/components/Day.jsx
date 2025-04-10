@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { DayTemparture } from "./DayTemparture";
 import { useCountries } from "@/hooks/useCountries";
 
-export const Day = ({ weatherData, setCityName }) => {
+export const Day = ({ weatherData, setCityName, isLoading }) => {
   const [search, setSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const { citiesWithCounties } = useCountries();
+  const { citiesWithCountries } = useCountries();
 
-  const filteredCities = citiesWithCounties.filter((city) =>
+  const filteredCities = citiesWithCountries.filter((city) =>
     city.toLowerCase().startsWith(search.toLowerCase())
   );
 
@@ -25,12 +25,12 @@ export const Day = ({ weatherData, setCityName }) => {
   };
 
   return (
-    <div className="w-[50%] bg-[#F3F4F6] rounded-2xl relative flex justify-center items-start pt-[60px] px-6 z-10">
-      <div className="w-full relative">
+    <div className="w-[50%] bg-white rounded-2xl relative flex justify-center items-center pt-[60px] ">
+      <div className="w-141.75 absolute top-10 left-10">
         <div
           className="flex items-center w-full shadow-xl bg-white rounded-[48px]
           p-4 gap-4 z-20"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={() => preventDefault()}
         >
           <img src="search.svg" alt="Search Icon" className="w-6 h-6" />
           <input
@@ -42,14 +42,15 @@ export const Day = ({ weatherData, setCityName }) => {
           />
         </div>
 
-        {showSuggestions && search.length > 1 && (
-          <ul className="absolute mt-2 bg-white rounded-md shadow-lg max-h-40 overflow-auto z-30 w-full">
-            {filteredCities.slice(0, 10).map((city, index) => (
+        {showSuggestions && search.length > 0 && (
+          <ul className="absolute mt-2 w- shadow-lg max-h-40 overflow-auto z-30 w-full rounded-3xl backdrop-blur-[12px]">
+            {filteredCities.slice(0, 4).map((city, index) => (
               <li
                 key={index}
-                className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-sm"
+                className="px-4 py-2 w-142.75 hover:bg-gray-200 cursor-pointer text-sm flex text-[28px] items-center font-bold gap-4 "
                 onClick={() => handleSelectCity(city)}
               >
+                <img src="Pin.svg" alt="" />
                 {city}
               </li>
             ))}
@@ -57,7 +58,7 @@ export const Day = ({ weatherData, setCityName }) => {
         )}
       </div>
 
-      <DayTemparture data={weatherData} />
+      <DayTemparture data={weatherData} isLoading={isLoading} />
     </div>
   );
 };

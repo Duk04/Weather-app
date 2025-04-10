@@ -1,6 +1,11 @@
 import React from "react";
+import { WeatherSkeleton } from "./WeatherSkeleton";
 
-export const DayTemparture = ({ data }) => {
+export const DayTemparture = ({ data, isLoading }) => {
+  if (isLoading || !data) {
+    return <WeatherSkeleton />;
+  }
+
   return (
     <div className="w-103.5 h-207 rounded-[48px] backdrop-blur-[12px] relative z-10 shadow-2xl">
       <div className="w-99.5 h-126 ml-1.5 mt-1.5 rounded-[42px] pt-14 pl-10 flex-col relative ">
